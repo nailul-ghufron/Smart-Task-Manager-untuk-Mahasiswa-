@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Task Manager</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', // Allow manual or media (currently keeping dynamic)
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c3ddfd',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Add dark mode toggle fallback based on media -->
+  <script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body
+  class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-brand-500 selection:text-white pb-20">
+
+  <!-- Decorative Blobs -->
+  <div
+    class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-500/20 blur-[100px] pointer-events-none z-0 mix-blend-multiply dark:mix-blend-lighten">
+  </div>
+  <div
+    class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-sky-400/20 blur-[120px] pointer-events-none z-0 mix-blend-multiply dark:mix-blend-lighten">
+  </div>
+  <div
+    class="fixed top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-purple-500/10 blur-[80px] pointer-events-none z-0 mix-blend-multiply dark:mix-blend-lighten">
+  </div>
+
+  <main class="relative z-10 max-w-4xl mx-auto px-4 pt-10 sm:pt-16 p-4">
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6">
+      <div>
+        <h1
+          class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-sky-500 dark:from-brand-400 dark:to-sky-300">
+          Smart Task Manager</h1>
+        <p class="text-slate-500 dark:text-slate-400 mt-2 text-lg font-medium">Tetap produktif, pantau deadline Anda
+          dengan mudah!</p>
+      </div>
+      <button id="newTaskBtn"
+        class="flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-1 active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-brand-500/50 flex-shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Tugas Baru
+      </button>
+    </header>
+
+    <!-- Filters Section -->
+    <section
+      class="glass-panel rounded-[2rem] p-5 sm:p-6 mb-8 flex flex-col xl:flex-row gap-5 lg:items-center shadow-lg shadow-slate-200/50 dark:shadow-none border border-white/60 dark:border-slate-700/50">
+      <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold px-2 w-full xl:w-auto">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
+          </path>
+        </svg>
+        <span>Filter & Urutkan</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full flex-1">
+        <select id="filterPriority"
+          class="bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3 transition-colors appearance-none outline-none">
+          <option value="all">Semua Prioritas</option>
+          <option value="high">Prioritas Tinggi</option>
+          <option value="medium">Prioritas Sedang</option>
+          <option value="low">Prioritas Rendah</option>
+        </select>
+
+        <select id="filterStatus"
+          class="bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3 transition-colors appearance-none outline-none">
+          <option value="all">Semua Status</option>
+          <option value="pending">Belum Selesai</option>
+          <option value="completed">Sudah Selesai</option>
+        </select>
+
+        <select id="filterDeadline"
+          class="bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3 transition-colors appearance-none outline-none">
+          <option value="all">Semua Deadline</option>
+          <option value="week">Minggu ini</option>
+          <option value="month">Bulan ini</option>
+          <option value="overdue">Overdue</option>
+        </select>
+
+        <select id="sortSelect"
+          class="bg-brand-50/80 dark:bg-brand-900/40 border border-brand-200 dark:border-brand-700 text-brand-700 dark:text-brand-300 font-bold text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3 transition-colors appearance-none outline-none">
+          <option value="deadline_asc">Urutkan: Deadline Terdekat</option>
+          <option value="priority_desc">Urutkan: Prioritas Tertinggi</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Task List Container -->
+    <section id="taskList" class="flex flex-col relative z-20">
+      <!-- Tasks will be injected here via UIController.js -->
+    </section>
+  </main>
+
+  <!-- Modal Component -->
+  <div id="taskModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" id="modalBackdrop"></div>
+
+    <!-- Modal Content -->
+    <div
+      class="relative bg-white dark:bg-slate-800 rounded-[2rem] w-full max-w-lg shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-700 transform scale-95 opacity-0 transition-all duration-300">
+
+      <div
+        class="flex justify-between items-center p-6 sm:p-8 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
+        <h3 id="modalTitle"
+          class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-sky-500 dark:from-brand-400 dark:to-sky-300">
+          Tugas Baru</h3>
+        <button type="button" id="closeModalBtn"
+          class="text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-slate-700 dark:hover:text-white rounded-full p-2 ml-auto inline-flex items-center transition-colors">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <form id="taskForm" class="space-y-6">
+          <input type="hidden" id="taskIdInput">
+
+          <div>
+            <label for="taskTitleInput" class="block mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">Judul
+              Tugas <span class="text-rose-500">*</span></label>
+            <input type="text" id="taskTitleInput"
+              class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3.5 transition-colors outline-none placeholder-slate-400"
+              placeholder="Misalnya: Buat makalah Pancasila" required>
+          </div>
+
+          <div>
+            <label for="taskDescInput" class="block mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">Deskripsi
+              (Opsional)</label>
+            <textarea id="taskDescInput" rows="3"
+              class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3.5 transition-colors resize-none outline-none placeholder-slate-400"
+              placeholder="Tuliskan detail tugas atau referensi..."></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="taskDeadlineInput"
+                class="block mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">Batas Waktu</label>
+              <input type="datetime-local" id="taskDeadlineInput"
+                class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3.5 transition-colors outline-none cursor-pointer">
+            </div>
+
+            <div>
+              <label for="taskPriorityInput"
+                class="block mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">Prioritas</label>
+              <select id="taskPriorityInput"
+                class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base font-medium rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block w-full p-3.5 transition-colors appearance-none outline-none cursor-pointer">
+                <option value="high">🔴 Tinggi</option>
+                <option value="medium">🟡 Sedang</option>
+                <option value="low" selected>🟢 Rendah</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            class="pt-6 mt-8 border-t border-slate-100 dark:border-slate-700/50 flex flex-col-reverse sm:flex-row justify-end gap-3 sm:gap-4">
+            <button type="button" onclick="document.getElementById('closeModalBtn').click()"
+              class="text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-4 focus:outline-none focus:ring-slate-100 dark:focus:ring-slate-700 font-bold rounded-xl text-sm px-6 py-3.5 transition-all w-full sm:w-auto">Batal</button>
+            <button type="submit"
+              class="text-white bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 focus:ring-4 focus:outline-none focus:ring-brand-300 dark:focus:ring-brand-800 font-bold rounded-xl text-sm px-8 py-3.5 shadow-lg shadow-brand-500/30 transition-all hover:scale-105 active:scale-95 w-full sm:w-auto">Simpan
+              Tugas</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>
