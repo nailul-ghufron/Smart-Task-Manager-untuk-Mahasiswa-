@@ -11,11 +11,11 @@
 </div>
 
 ---
-<a href="https://nailul-ghufron.github.io/Smart-Task-Manager-untuk-Mahasiswa-/" 
-   target="_blank" 
-   rel="noopener noreferrer">
-   🔗 Live Demo →
-</a>
+<p align="center">
+  <a href="https://nailul-ghufron.github.io/Smart-Task-Manager-untuk-Mahasiswa-/" target="_blank">
+    🚀 <b>Live Demo</b>
+  </a>
+</p>
 
 ## 📌 Tentang Aplikasi
 **Smart Task Manager** adalah aplikasi *To-Do List* atau sistem manajemen tugas berbasis peramban (browser) reaktif dengan desain UI modern (*Glassmorphism*, dukungan Mode Gelap, dan animasi mikro). Aplikasi ini didesain khusus untuk membantu rutinitas harian para mahasiswa agar tugas atau proyek tidak terabaikan berkat sistem peringatan (*reminder*) hingga batas waktu (*deadline*).
