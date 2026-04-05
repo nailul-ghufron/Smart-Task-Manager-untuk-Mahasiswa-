@@ -11,6 +11,7 @@
 </div>
 
 ---
+🔗 **[Live Demo →](https://nailul-ghufron.github.io/Smart-Task-Manager-untuk-Mahasiswa-/)**
 
 ## 📌 Tentang Aplikasi
 **Smart Task Manager** adalah aplikasi *To-Do List* atau sistem manajemen tugas berbasis peramban (browser) reaktif dengan desain UI modern (*Glassmorphism*, dukungan Mode Gelap, dan animasi mikro). Aplikasi ini didesain khusus untuk membantu rutinitas harian para mahasiswa agar tugas atau proyek tidak terabaikan berkat sistem peringatan (*reminder*) hingga batas waktu (*deadline*).
@@ -50,12 +51,12 @@ Tidak perlu setup _backend_ atau konfigurasi server khusus!
 
 1. **Clone repositori ini:**
    ```bash
-   git clone https://github.com/username-anda/smart-task-manager.git
+   git clone https://github.com/nailul-ghufron/Smart-Task-Manager-untuk-Mahasiswa-.git
    ```
 
 2. **Masuk ke folder proyek:**
    ```bash
-   cd smart-task-manager
+   cd Smart-Task-Manager-untuk-Mahasiswa-
    ```
 
 3. **Buka ke Browser Utama (Menjalankan Secara Lokal):**
@@ -67,7 +68,7 @@ Tidak perlu setup _backend_ atau konfigurasi server khusus!
      ```
 
 ## 📱 Tangkapan Layar (Screenshots)
-*(Tambahkan gambar screenshot aplikasi disini dengan letak file direktori /assets/)*
+*(Belum Tersedia)*
 ```markdown
 ![Dashboard](link-to-dashboard-image.jpg)
 ```
